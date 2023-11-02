@@ -1,0 +1,504 @@
+EXP2- perform installation of Git and work on local and remote Git repositories
+Yukti-
+sudo apt-get install git
+git clone linkofgithub
+ls
+git --version
+touch file.txt
+cat file.txt  (write your name class and college name)
+cat -> file.txt
+cd fileofyourgithublink
+git init
+ls -la (If you pass it the -a flag, it will display hidden files.)
+mkdir test
+cd test
+rm -rf test/
+rm -rf fileofyourgithublink
+git clone link
+cd Desktop
+cd Adarsh
+ls -la
+cd ..
+cd ..
+cd Adarsh
+git status
+git commit
+git status
+git log
+
+option2:
+
+---> start from here------
+sudo su root
+git clone https://github.com/yukti18/FreshGrab.git Yukti
+cd Yukti
+ls -la
+cd .git (there would be a .git file in ls -la)
+ls
+cd ..
+mkdir yukti
+cd yukti
+touch file.txt
+gedit file.txt
+hello apsit
+cd Yukti
+ls -la
+git init
+git add .
+git status<show changes to be commited>
+git log
+git commit-m “my first commit”
+first commit
+git config --global user.name "yukti18"
+git config --global user.email "yuktiogare@gmail.com"
+git status
+git log
+
+option3:
+1)sudo apt-get install git
+2)mkdir Shweta
+3)cd Shweta
+4)git init -b Shweta
+5) git config --global user.name "Shweta-Bhutada"
+git config --global user.email "21104007.shweta.bhutada@gmail.com"
+git config --global --list
+6)gedit  shweta.txt
+git add shweta.txt
+ls
+7)git status
+8)git commit -m “my first commit”
+first commit
+git log
+git log --oneline
+git show <in this space add the op of --oneline username like eeafc42>
+9)git push origin master or git push origin main
+
+
+EXP3- Version Control System / Source Code Management, install git and create a GitHub account.
+1)follow the steps of exp2
+2)Make some changes in the previous file like “file.txt” and then add that file again
+gedit file.txt
+ls -la
+git init
+git config --global user.name "yukti18"
+git config --global user.email "yuktiogare@gmail.com"
+git add file.txt / git add .
+3)Do second commit after making changes in the file as follows
+git commit -m “my second commit”
+4)Check Git Status after after step to see the staging of git repository
+git status
+5)git log
+git log --oneline
+git show<in this space add the op of --oneline username like eeafc42>
+To see the difference in the content of file between first and second commit.
+git diff shweta.txt
+ Creating a latter commit and reverting back to see the initial/original content
+git commit <secondcommitID>
+git revert ( I'd of exp 3 that is created by log )
+cat file.txt
+git remote add origin " url of any git repo"
+git remote -V
+git push origin master
+
+
+EXP4- To install and configure Jenkins to test and deploy an application with Maven.
+1)http://localhost:8080 if it authentication doesnt work then 
+sudo su root
+cd /var/lib/jenkins/config.xml make security false and restart the service 
+sudo service jenkins restart 
+2)To display your name on Jenkins dashboard by creating a message in system settings
+dashboard->manage jenkins->system -> system message <your name>
+3)for simple builds 
+i- create a new item freestyle project of any name 
+Assign build trigger check this box build periodically then in the box type * * * * *
+then apply save and build
+ii- in that same project go to configurations remove the build trigger and then scroll down in last dropdown
+execute shell type
+mkdir demo
+cd demo 
+touch t1.txt
+output is when you build this go on terminal and paste the path ls you can see there is a directory demo then
+ls there you will find t1.txt
+4)for maven projects
+create a new item>maven project>
+name: maven1
+tick github project add url https://github.com/anujdevopslearn/MavenBuild.git
+ 
+
+EXP5-To create and build a CI/CD pipeline in Jenkins to test and deploy an application over the tomcat server 
+1)open jenkins localhost:8080
+dashboard>new item>freestyle>buildjob1>config
+under build steps>execute shell
+command
+date 
+echo 'this is buildjob'
+
+build testjob,deployjob and releasejob in the same way
+
+dashboard >new view
+name :pipeline project
+type:build pipeline view
+description: 
+this is for intergrating these 4 modules:
+1.build
+2.test
+3.deploy
+4.release
+scroll down to upstream/downstream config
+select initial job
+build job
+
+trigger options: standard build card
+
+restruct trigger :yes
+build trigger
+click on build after other projects are built
+test,job
+click trigger only if build is stable
+no of displayed builds
+5
+row headers: just the pipeline number
+clumn header : no header
+refresh frequecy:3
+done
+
+terminal:
+pwd
+cd Downloads
+sudo tar -xvf apache-tomcat-9.0.80.tar.gz
+cd apache-tomcat-9.0.80
+ls
+sudo su
+cd bin
+cd ..
+ls
+cd conf
+ls
+nano server.xml
+cd ..
+cd bin
+ls
+./shutdown.sh
+./startup.sh
+
+on jenkins
+dashboard>tomcat>cnfg
+credentials
+Deployer/******
+tomcat url
+http://localhost:8081/
+
+terminal:
+sudo su
+cd conf
+ls
+nano tomcat-users.xml (<user username="Deployer" password="Deployer" roles="manager-script.admin-gui,manager-gui,manager-jmx,manager-status"/>
+cd ..
+cd bin
+./shutdown.sh
+./startup.sh
+check the build status and run localhost 8081 and check download progress
+dashboard>tomcatmavenproject>config
+source code managment
+git 
+repo url: https://github.com/ravdy/hello-world.git
+pre steps:
+build: pom.xml
+goals: clean package
+deployer: **/*.war
+context path:hello-world
+container: credential:Deployer/******
+tomcat url :http://localhost:8081/
+check status
+console output
+browers http://localhost:8081/
+
+//option2:
+8)open jenkins
+new item>pipeline project>
+name pipe1 (buildjob1)
+pipeline script then in the box type 
+date
+echo 'this is a buildjob'
+##
+pipeline{
+ agent any
+ stages {
+   stage("hello") {
+   steps{
+          echo "welcome to APSIT"
+   }
+  }
+ }
+}
+
+dashboard>new item>freestyle
+build_stage
+keep defatult and scroll down
+build steps > add build steps> execute shell
+in the box 
+sleep 10 
+echo "building"
+apply and save 
+
+dashboard>new item>freestyle
+deploy_stage
+build steps > add build steps> execute shell
+in the box 
+sleep 10 
+echo "deploying"
+apply and save
+
+dashboard>manage jenkins>plugins>download plugin Build Pipeline>tick restart jenkins 
+click on the build_stage and go on its configure scroll down below build steps and post build actions 
+select build other projectsand type deploy_stage
+tick trigger only if the build is stable 
+apply and save 
+
+go to dashboard click on the plus icon next to all 
+enter view name and select build pipeline view  click ok 
+change the upstream/downstream config with build_stage click ok and run and if the second project
+doesnt start click on trigger 
+In terminal 
+pwd
+1)sudo su 
+2)cd Downloads
+sudo tar -xvf apache-tomcat-9.0.80.tar.gz
+3)cd apache-tomcat-9.0.80
+if its not installed install tar.gz from https://tomcat.apache.org/download-90.cgi extract the file and then cd into that folder
+ls
+cd bin
+ls
+./startup.sh
+4)cd ..
+cd conf
+ls
+nano server.xml
+changed the server port from 8080 to 8081 because jenkins uses port 80 by making
+changes into server.xml
+5)cd ..
+cd bin
+./shutdown.sh
+./startup.sh
+6)cd ..
+cd conf
+ls
+nano tomcat-users.xml
+add “admin” username and password “123456” in tomcat-users.xml 
+7)cd ..
+cd bin
+./shutdown.sh
+./startup.sh
+
+
+EXP6- To understand Jenkins Master-Slave Architecture and scale your 
+Jenkins standalone implementation by implementing slave node
+1)Open jenkins 
+dashboard>manage jenkins>nodes>new node
+node name: node1
+permanent agent
+desc.: this is my first node
+executor:1
+remote root directory: /tmp or   /home/apsit/Documents/Shweta/slave_shweta
+label:Slave1
+usage:use this node as much as possible
+launch method: launch agent by connecting it to the controller
+custom workdir path: /tmp  or  /home/apsit/Documents/Shweta/slave_shweta
+internal data directory:remoting
+availibility: keep this agent online as much as possible
+2) make tcp is at random go into manage jenkins >security
+[open configure global security click random and save]
+Manage Jenkins > configure global security
+Security realm- Jenkins own user database
+Authorization - logged-in user can do anything
+Markup text - plain text
+Agents -Random
+Save
+run the cmds after creating the node this will turn the status of the node online
+IN terminal run these commands
+curl -sO http://localhost:8080/jnlpJars/agent.jar
+java -jar agent.jar -jnlpUrl http://localhost:8080/computer/Slave/jenkins-agent.jnlp -workDir 
+"/tmp"
+build the nodes back on jenkins interface
+3)create a freestyle project 
+dashboard>create new item > freestyle project>
+desc: this is a project to be run on node 1
+tick this box restrict where this project is run on
+label expression:Slave1
+keep all default save apply buildnow
+take ss 
+
+
+EXP7- To perform continuous testing of web application using Selenium
+1) create a java file with name exp7 on IDE
+2) add jar file of selenium right click on project explorer build path> configure build
+path > libraries > add external jar> downloads> selenium-server,jar apply and close
+3) create a class with name demo and check public static void main
+4) in the class file remove the comment and type
+package exp7;
+import org.openqa.selenium.chrome.ChromeDriver;
+public class demo{
+public static void main(String[] args) {
+ChromeDriver driver = new ChromeDriver();
+driver.get("http://www.google.com");
+}
+}
+5) run the file the output will be new window showing google
+
+
+EXP8- To demonstrate container lifecycle using various docker commands.
+1)sudo apt-get install docker
+docker --version
+2)docker pull ubuntu
+3)docker images <This command is used to show all the pulled images from docker>
+4)docker run -it -d ubuntu <This command is used to access the running container>
+5)docker ps<This command lists the running containers>
+docker ps -a< used to display information about all containers, whether they are running or stopped>
+6)docker exec -it <container id from 4th cmd> bash 
+ls
+7)exit
+8)docker pull mysql
+this might not work in one go try again 
+9)docker run --name apsit -e MYSQL_USR=user -e MYSQL_PASSWORD=root -e MYSQL_DATABASE=apple -e MYSQL_ROOT_PASSWORD=root -d mysql
+10)docker ps
+11)docker exec -it <container id> bash 
+mysql -u root -p
+enter password:123456
+mysql>show databases;
+exit 
+12)docker ps
+docker stop <container id>
+  docker kill <container id>
+  docker rm <container id>
+  docker rmi <image id>
+
+
+EXP9- To learn Docker file instructions, build an image for a sample web application using Docker file
+1)sudo su
+mkdir myapp
+cd myapp
+touch index.html
+gedit index.html
+in the gedit file type echo "Hello World!!"      <save and close>
+2)touch Dockerfile
+gedit Dockerfile
+in the gedit file type 
+FROM nginx
+COPY index.html  /usr/share/nginx/html    <save and close>
+3)docker info
+(Note if output is not generated then type command) 
+Sudo service docker start
+4)docker build -t myapp .
+docker images
+docker run -p 8083:80 myapp
+5)Verify the web application created through container on given port number of local host.
+localhost:8083
+
+
+EXP10- To install and provision master-slave configuration of Puppet by using AWS.
+1)in AWS 
+Create a security group in ec2 instance and add three inbound rules allowing all traffic 
+but the destination port changes to anywhere ipv4 anywhere ipv6 and my ip.
+2)Create two EC2 instances as Puppet Master and Puppet Slave
+Select Ubuntu and free tier create a key pair name it and it automatically downloads itself keep 
+everything default name is puppet_kp scroll down and select use existing security groups and 
+choose your security group.
+Launch the instances and wait till they clear their status test keep refreshing change their name as 
+master and slave
+3)Right click on master and click connect 
+connect to instance>ssh client>
+##dont close this and open a terminal 
+4)In terminal
+sudo su 
+cd Downloads
+then paste the commands from the browser 
+Exp 10,11
+chmod 400 puppet\keypair.pem
+ssh -i "puppet-keypair.pem" cp/ paste form AWS
+Same for slave
+5)similarly for slave in another terminal
+6)follow github commands
+https://github.com/vishal815/Puppet_Master_and_Puppet_slave_setup_on_AWS.git
+
+Puppet Master Setup
+Step1: Modify the Puppet Master's hosts file
+sudo nano /etc/hosts
+Add the following line:
+<Puppet_Master_Private_IP> puppet
+Step 2: Download and install the Puppet Master packages
+curl -O https://apt.puppetlabs.com/puppet6-release-bionic.deb
+sudo dpkg -i puppet6-release-bionic.deb
+sudo apt-get update
+sudo apt-get install puppetserver -y
+Step 3: Change the Memory Configuration of puppet default server from 2GB to 512MB
+sudo nano /etc/default/puppetserver
+JAVA_ARGS = "-Xms512m -Xms512m"
+Step4: Allow traffic on port 8140
+sudo ufw allow 8140
+Step5: Configure and start Puppet Master
+sudo systemctl enable puppetserver.service
+sudo systemctl start puppetserver.service
+sudo systemctl status puppetserver.service
+
+Puppet Agent Setup
+Step6: Modify the Puppet Agent's hosts file
+sudo nano /etc/hosts
+Add the following line:
+<Puppet_Master_Private_IP> puppet
+Step7: Download and install the Puppet Agent packages
+curl -O https://apt.puppetlabs.com/puppet6-release-bionic.deb
+sudo dpkg -i puppet6-release-bionic.deb
+sudo apt-get update
+sudo apt-get install puppet-agent -y
+Step8: Enable and restart the Puppet Agent service
+sudo systemctl enable puppet
+sudo systemctl restart puppet
+sudo systemctl status puppet
+
+EXP11- To implement Software Configuration Management and provisioning using Puppet Blocks(Manifest, Modules)
+1)First follow all steps of exp 10 and then in this step 
+List certificate requests
+sudo /opt/puppetlabs/bin/puppetserver ca list
+sudo /opt/puppetlabs/bin/puppetserver ca sign --certname <Agent_CertName>
+in this <Agent_CertName> put the DNS address of the slave fully as is its also show on in previous step as 
+requested certificate. DNS can be found in aws. 
+2)then in this step make these changes 
+sudo nano /etc/puppetlabs/code/environments/production/manifests/site.pp
+add the following 
+file { ‘/tmp/puppet_test.txt’:
+ ensure => present,
+ mode => ‘0644’,
+ content => “Hello from Puppet master (Welcome to puppet testing with vishal.) to agent on IP address 
+${ipaddress_eth0}\n”,
+}
+3) sudo /opt/puppetLabs/bin/puppet agent --test
+4)sudo cat /tmp/puppet_test.txt
+this should give output as hello from puppet mater .......
+
+
+EXP12-To install and configure software configuration management using Ansible
+1)sudo su 
+2)ansible --version
+3)cd /etc/ansible
+ls
+4)cd playbooks
+ls
+gedit yukti_playbook.yaml (or .yml)
+in this file type 
+---
+    - hosts: localhost
+      tasks: 
+      - name: "create a directory named ANSIBLEYukti"
+        file:
+         path: /home/apsit/ANSIBLEYukti
+         state: directory
+    # - name: "create a file on ANSIBLE directory"
+#       file:
+ #       path: /home/apsit/ANSIBLE/fileansible.txt
+  #      state: touch
+5)ansible-playbook yukti_playbook.yml
+6)cd ..
+cd /home/apsit
+ls
+output is you can see a directory named ANSIBLEYukti
+
